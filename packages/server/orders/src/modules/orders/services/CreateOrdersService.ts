@@ -1,3 +1,6 @@
+import { Producer } from '@nodejs-kafka/shared/src/infra/Producer'
+import { client } from '@infra/kafka/client'
+
 interface IOrder {
   productId: string;
   quantity: number;
@@ -7,7 +10,10 @@ interface IOrder {
 class CreateOrdersService {
   private orders: IOrder[]
 
+  private producer: Producer
+
   constructor () {
+    this.producer = new Producer(client, 'ORDER_CREATED')
     this.orders = []
   }
 
@@ -15,6 +21,8 @@ class CreateOrdersService {
     this.orders.push(order)
 
     console.log(this.orders)
+
+    this.producer.execute(order)
 
     return order
   }
