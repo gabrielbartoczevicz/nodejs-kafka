@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": "true",
   "workspaces": [
-    "server/**"
+    "packages/server/**"
   ],
   "dependencies": {
     "cors": "^2.8.5",

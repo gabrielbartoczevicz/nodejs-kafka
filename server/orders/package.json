@@ -1,9 +1,0 @@
-{
-  "name": "orders",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "dev": "tsnd --inspect --transpile-only --clear --ignore-watch node_modules src/server.ts"
-  }
-}
