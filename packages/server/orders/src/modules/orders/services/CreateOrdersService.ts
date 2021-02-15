@@ -13,7 +13,7 @@ class CreateOrdersService {
   private producer: Producer
 
   constructor () {
-    this.producer = new Producer(client, 'ORDER_CREATED')
+    this.producer = new Producer({ client, topic: 'ORDER_CREATED' })
     this.orders = []
   }
 

@@ -2,14 +2,20 @@ import { Kafka } from 'kafkajs'
 
 type ICallback = (message: unknown) => Promise<void>
 
+interface IConstructor {
+  client: Kafka
+  groupId: string
+  topic: string
+}
+
 class Consumer {
   private client: Kafka
 
-  private topic: string
-
   private groupId: string
 
-  constructor (client: Kafka, groupId: string, topic: string) {
+  private topic: string
+
+  constructor ({ client, groupId, topic }: IConstructor) {
     this.client = client
     this.groupId = groupId
     this.topic = topic
