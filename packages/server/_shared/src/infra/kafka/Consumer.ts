@@ -32,7 +32,11 @@ class Consumer {
       eachMessage: async ({ topic, partition, message }) => {
         console.log(`${topic}[${partition} | ${message.offset}] / ${message.timestamp}`)
 
-        await callback(message.value.toString())
+        const jsonVal = JSON.parse(message.value.toString())
+
+        const value = new Map(Object.entries(jsonVal))
+
+        await callback(value)
       }
     })
   }

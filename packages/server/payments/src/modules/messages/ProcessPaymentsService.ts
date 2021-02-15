@@ -1,6 +1,16 @@
+const { log } = console
+
 class ProcessPaymentsService {
   public async execute (message: unknown): Promise<void> {
-    console.log('Processing Message', message)
+    log('Processing Message', message)
+
+    if (message instanceof Map) {
+      log('Iterating message\'s Map\n')
+
+      message.forEach((val, key) => {
+        log(`${key}: ${val}`)
+      })
+    }
   }
 }
 
