@@ -5,5 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "tsnd -r tsconfig-paths/register --respawn --transpile-only --no-notify src/server.ts"
+  },
+  "dependencies": {
+    "@nodejs-kafka/shared": "*"
   }
 }

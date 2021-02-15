@@ -1,21 +1,13 @@
+import { Consumer } from '@nodejs-kafka/shared/src/infra/kafka/Consumer'
 import { client } from '@infra/kafka/client'
-
-const consumer = client.consumer({ groupId: 'payments-group' })
+import { ProcessMessagesService } from '@modules/messages/ProcessMessagesService'
 
 const run = async () => {
-  await consumer.connect()
+  const consumer = new Consumer(client, 'payments-group', 'ORDER_CREATED')
 
-  await consumer.subscribe({ topic: 'ORDER_CREATED' })
+  const processMessageService = new ProcessMessagesService()
 
-  await consumer.run({
-    eachMessage: async ({ topic: _, partition, message }) => {
-      console.log({
-        partition,
-        offset: message.offset,
-        value: message.value.toString()
-      })
-    }
-  })
+  await consumer.execute(processMessageService.execute)
 }
 
 run().catch(console.error)
