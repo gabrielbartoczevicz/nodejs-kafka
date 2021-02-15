@@ -1,5 +1,7 @@
 import { Kafka } from 'kafkajs'
 
+type ICallback = (message: unknown) => Promise<void>
+
 class Consumer {
   private client: Kafka
 
@@ -13,7 +15,7 @@ class Consumer {
     this.topic = topic
   }
 
-  public async execute (callback: (message: any) => Promise<void>): Promise<void> {
+  public async execute (callback: ICallback): Promise<void> {
     const consumer = this.client.consumer({ groupId: this.groupId })
 
     await consumer.connect()
@@ -22,14 +24,9 @@ class Consumer {
 
     await consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
-        console.log({
-          topic,
-          partition,
-          offset: message.offset,
-          timestamp: message.timestamp
-        })
+        console.log(`${topic}[${partition} | ${message.offset}] / ${message.timestamp}`)
 
-        callback(message.value.toString())
+        await callback(message.value.toString())
       }
     })
   }
