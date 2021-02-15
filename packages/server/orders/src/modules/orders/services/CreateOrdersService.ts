@@ -1,4 +1,4 @@
-import { Producer } from '@nodejs-kafka/shared/src/infra/Producer'
+import { Producer } from '@nodejs-kafka/shared/src/infra/kafka/Producer'
 import { client } from '@infra/kafka/client'
 
 interface IOrder {

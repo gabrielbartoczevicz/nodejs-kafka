@@ -1,4 +1,4 @@
-import { Controller } from '@nodejs-kafka/shared/src/infra/Controller'
+import { Controller } from '@nodejs-kafka/shared/src/infra/http/Controller'
 
 import { CreateOrdersService } from '@modules/orders/services/CreateOrdersService'
 
