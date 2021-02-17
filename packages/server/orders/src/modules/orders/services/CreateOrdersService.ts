@@ -4,7 +4,7 @@ import { client } from '@infra/kafka/client'
 interface IOrder {
   productId: string;
   quantity: number;
-  value: string;
+  value: number;
 }
 
 class CreateOrdersService {
@@ -22,7 +22,7 @@ class CreateOrdersService {
 
     console.log(this.orders)
 
-    this.producer.execute(order)
+    await this.producer.execute(order)
 
     return order
   }

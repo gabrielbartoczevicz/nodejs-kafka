@@ -1,6 +1,7 @@
 import { Consumer } from '@nodejs-kafka/shared/src/infra/kafka/Consumer'
-import { client } from '@infra/kafka/client'
 import { ProcessPaymentsService } from '@modules/messages/ProcessPaymentsService'
+import { client } from '@infra/kafka/client'
+import { PayOrderService } from '@modules/orders/services/PayOrderService'
 
 const run = async () => {
   const consumer = new Consumer({
@@ -9,9 +10,11 @@ const run = async () => {
     topic: 'ORDER_CREATED'
   })
 
-  const processPayment = new ProcessPaymentsService()
+  const payOrder = new PayOrderService()
 
-  await consumer.execute(processPayment.execute)
+  const processPayment = new ProcessPaymentsService(payOrder)
+
+  await consumer.execute(processPayment)
 }
 
 run().catch(console.error)

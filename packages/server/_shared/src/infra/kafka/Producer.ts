@@ -15,7 +15,7 @@ class Producer {
     this.topic = topic
   }
 
-  public async execute (message: any) {
+  public async execute (message: unknown) {
     const producer = this.client.producer()
 
     await producer.connect()

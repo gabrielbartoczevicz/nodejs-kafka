@@ -1,6 +1,5 @@
 import { Kafka } from 'kafkajs'
-
-type ICallback = (message: unknown) => Promise<void>
+import { IEventConsumer } from './IEventConsumer'
 
 interface IConstructor {
   client: Kafka
@@ -21,7 +20,7 @@ class Consumer {
     this.topic = topic
   }
 
-  public async execute (callback: ICallback): Promise<void> {
+  public async execute (eventConsumer: IEventConsumer): Promise<void> {
     const consumer = this.client.consumer({ groupId: this.groupId })
 
     await consumer.connect()
@@ -32,11 +31,11 @@ class Consumer {
       eachMessage: async ({ topic, partition, message }) => {
         console.log(`${topic}[${partition} | ${message.offset}] / ${message.timestamp}`)
 
-        const jsonVal = JSON.parse(message.value.toString())
+        const json = JSON.parse(message.value.toString())
 
-        const value = new Map(Object.entries(jsonVal))
+        const map = new Map(Object.entries(json))
 
-        await callback(value)
+        await eventConsumer.execute(map)
       }
     })
   }
