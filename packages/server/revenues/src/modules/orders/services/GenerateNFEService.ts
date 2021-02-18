@@ -10,7 +10,7 @@ class GenerateNFEService {
   public async execute (order: IOrder): Promise<void> {
     const toPayOrder: IOrder = {
       ...order,
-      nfe: `nfe_${order.productId}_${new Date().getFullYear()}`
+      nfe: `nfe_${order.productId}_${new Date().getFullYear()}.xml`
     }
 
     this.paidOrders.push(toPayOrder)
