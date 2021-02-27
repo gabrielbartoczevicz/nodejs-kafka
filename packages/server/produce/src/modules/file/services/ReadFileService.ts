@@ -35,7 +35,7 @@ class ReadFileService {
 
       pipe.on('error', (err) => reject(err))
 
-      parser.on('end', () => resolve(messages))
+      pipe.on('end', () => resolve(messages))
     })
   }
 }
