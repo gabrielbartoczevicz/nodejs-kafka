@@ -5,6 +5,10 @@ interface IConstructor {
   topic: string
 }
 
+interface IRequest {
+  message: unknown
+}
+
 class Producer {
   private client: Kafka
 
@@ -15,7 +19,7 @@ class Producer {
     this.topic = topic
   }
 
-  public async execute (message: unknown) {
+  public async execute ({ message }: IRequest) {
     const producer = this.client.producer()
 
     await producer.connect()
