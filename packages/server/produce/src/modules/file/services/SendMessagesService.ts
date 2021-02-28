@@ -11,7 +11,7 @@ class SendMessagesService {
 
   private rate: number
 
-  private sendWithDelay: boolean
+  private sendWithNoDelay: boolean
 
   constructor ({ rate }: IConstructor) {
     this.producer = new Producer({ client, topic: 'CSV_MESSAGE' })
@@ -21,7 +21,7 @@ class SendMessagesService {
   execute (messages: IMessageDTO[], start?: number) {
     let i = start || 0
 
-    this.sendWithDelay = this.rate === 0
+    this.sendWithNoDelay = this.rate === 0
 
     const length = messages.length
 
@@ -36,14 +36,14 @@ class SendMessagesService {
 
       i = i + 1
 
-      if (!this.sendWithDelay) {
+      if (!this.sendWithNoDelay) {
         if (messages[i]) {
           const delay = messages[i].time - messages[i - 1].time
 
           setTimeout(() => this.execute(messages, i), delay / this.rate)
         }
       }
-    } while (messages[i] && this.sendWithDelay)
+    } while (messages[i] && this.sendWithNoDelay)
   }
 }
 
