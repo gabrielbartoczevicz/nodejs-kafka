@@ -2,6 +2,10 @@ import { Producer } from '@nodejs-kafka/shared/src/infra/kafka/Producer'
 import { client } from '@infra/kafka/client'
 import { IMessageDTO } from '../dtos/IMessageDTO'
 
+interface IConstructor {
+  rate?: number | 1
+}
+
 class SendMessagesService {
   private producer: Producer
 
@@ -9,9 +13,9 @@ class SendMessagesService {
 
   private sendWithDelay: boolean
 
-  constructor (rate?: number) {
+  constructor ({ rate }: IConstructor) {
     this.producer = new Producer({ client, topic: 'CSV_MESSAGE' })
-    this.rate = rate || 1
+    this.rate = rate
   }
 
   execute (messages: IMessageDTO[], start?: number) {

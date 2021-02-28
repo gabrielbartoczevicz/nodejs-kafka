@@ -5,13 +5,14 @@ import { IMessageDTO } from '@modules/file/dtos/IMessageDTO'
 
 interface IRequest {
   filePath: string
+  delimiter?: string | ','
 }
 
 class ReadFileService {
-  async execute ({ filePath }: IRequest): Promise<IMessageDTO[]> {
+  async execute ({ filePath, delimiter }: IRequest): Promise<IMessageDTO[]> {
     const csvReadStream = fs.createReadStream(filePath, { encoding: 'utf-8' })
 
-    const parser = csvParser({ delimiter: ',' })
+    const parser = csvParser({ delimiter })
 
     const pipe = csvReadStream.pipe(parser)
 

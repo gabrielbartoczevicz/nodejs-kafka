@@ -10,7 +10,7 @@ const main = async (): Promise<void> => {
 
   const messages = await readFile.execute({ filePath })
 
-  const sendMessages = new SendMessagesService(100)
+  const sendMessages = new SendMessagesService({ rate: 100 })
 
   sendMessages.execute(messages)
 }
